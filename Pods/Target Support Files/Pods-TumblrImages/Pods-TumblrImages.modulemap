@@ -1,0 +1,6 @@
+framework module Pods_TumblrImages {
+  umbrella header "Pods-TumblrImages-umbrella.h"
+
+  export *
+  module * { export * }
+}
