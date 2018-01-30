@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0920"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B50AC042942C6C74792B2E4D4D9AF616"
+               BlueprintIdentifier = "00B990BE80C0254385DEFC7502E8FA18"
                BuildableName = "Pods_TumblrImages.framework"
                BlueprintName = "Pods-TumblrImages"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -47,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B50AC042942C6C74792B2E4D4D9AF616"
+            BlueprintIdentifier = "00B990BE80C0254385DEFC7502E8FA18"
             BuildableName = "Pods_TumblrImages.framework"
             BlueprintName = "Pods-TumblrImages"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -6,9 +6,10 @@ target 'TumblrImages' do
   use_frameworks!
 
   # Pods for TumblrImages
-  pod 'Alamofire', '~> 4.4'
+  pod 'AlamofireImage'
+  pod 'Alamofire'
   # Add additional dependencies
-  pod 'OAuthSwift', '~> 1.1.0'
+  pod 'OAuthSwift'
   pod 'OAuthSwiftAlamofire'
  
   target 'TumblrImagesTests' do

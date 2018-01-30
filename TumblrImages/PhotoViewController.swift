@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import AlamofireImage
+import Alamofire
+import OAuthSwift
+import OAuthSwiftAlamofire
 
 class PhotoViewController: UIViewController {
 
     var posts: [[String: Any]] = [];
+    @IBOutlet weak var photoTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +36,8 @@ class PhotoViewController: UIViewController {
                 // Store the returned array of dictionaries in our posts property
                 self.posts = responseDictionary["posts"] as! [[String: Any]]
                 // TODO: Reload the table view
+                self.photoTable.numberOfRows(inSection: self.posts.count)
+                
             }
         }
         task.resume()
