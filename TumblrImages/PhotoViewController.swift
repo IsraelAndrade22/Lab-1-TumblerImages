@@ -11,13 +11,23 @@ import Alamofire
 import OAuthSwift
 import OAuthSwiftAlamofire
 
-class PhotoViewController: UIViewController {
+class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var posts: [[String: Any]] = [];
     @IBOutlet weak var photoTable: UITableView!
     
+    let data = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX",
+                "Philadelphia, PA", "Phoenix, AZ", "San Diego, CA", "San Antonio, TX",
+                "Dallas, TX", "Detroit, MI", "San Jose, CA", "Indianapolis, IN",
+                "Jacksonville, FL", "San Francisco, CA", "Columbus, OH", "Austin, TX",
+                "Memphis, TN", "Baltimore, MD", "Charlotte, ND", "Fort Worth, TX"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //table settin
+        photoTable.delegate = self
+        photoTable.dataSource = self
 
         // Network request snippet
         let url = URL(string: "https://api.tumblr.com/v2/blog/humansofnewyork.tumblr.com/posts/photo?api_key=Q6vHoaVm5L1u2ZAW1fqv3Jw48gFzYVg9P0vH0VHl3GVy6quoGV")!
@@ -28,7 +38,7 @@ class PhotoViewController: UIViewController {
                 print(error.localizedDescription)
             } else if let data = data,
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                print(dataDictionary)
+                //print(dataDictionary)
                 
                 // TODO: Get the posts and store in posts property
                 // Get the dictionary from the response key
@@ -38,25 +48,31 @@ class PhotoViewController: UIViewController {
                 // TODO: Reload the table view
                 self.photoTable.numberOfRows(inSection: self.posts.count)
                 
+                print(self.posts)
+                
             }
         }
         task.resume()
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = photoTable.dequeueReusableCell(withIdentifier: "PhotoCell",for:indexPath) as! PhotoCell
+        
+        //let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        //cell.textLabel?.text = data[indexPath.row]
+        return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
