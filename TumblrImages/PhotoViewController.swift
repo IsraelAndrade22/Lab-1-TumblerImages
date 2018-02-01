@@ -16,16 +16,10 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
     var posts: [[String: Any]] = [];
     @IBOutlet weak var photoTable: UITableView!
     
-    let data = ["New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX",
-                "Philadelphia, PA", "Phoenix, AZ", "San Diego, CA", "San Antonio, TX",
-                "Dallas, TX", "Detroit, MI", "San Jose, CA", "Indianapolis, IN",
-                "Jacksonville, FL", "San Francisco, CA", "Columbus, OH", "Austin, TX",
-                "Memphis, TN", "Baltimore, MD", "Charlotte, ND", "Fort Worth, TX"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //table settin
+        //table setting
         photoTable.delegate = self
         photoTable.dataSource = self
 
@@ -38,17 +32,15 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
                 print(error.localizedDescription)
             } else if let data = data,
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                //print(dataDictionary)
                 
                 // TODO: Get the posts and store in posts property
                 // Get the dictionary from the response key
                 let responseDictionary = dataDictionary["response"] as! [String: Any]
                 // Store the returned array of dictionaries in our posts property
                 self.posts = responseDictionary["posts"] as! [[String: Any]]
-                // TODO: Reload the table view
-                self.photoTable.numberOfRows(inSection: self.posts.count)
                 
-                print(self.posts)
+                // TODO: Reload the table view
+                self.photoTable.reloadData()
                 
             }
         }
@@ -57,10 +49,24 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = photoTable.dequeueReusableCell(withIdentifier: "PhotoCell",for:indexPath) as! PhotoCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
+        let post = posts[indexPath.row]
         
-        //let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        //cell.textLabel?.text = data[indexPath.row]
+        if let photos = post["photos"] as? [[String: Any]] {
+            // photos is NOT nil, we can use it!
+            // TODO: Get the photo url
+            // 1.
+            let photo = photos[0]
+            // 2.
+            let originalSize = photo["original_size"] as! [String: Any]
+            // 3.
+            let urlString = originalSize["url"] as! String
+            // 4.
+            let url = URL(string: urlString)
+            
+            cell.tumblrImageView.af_setImage(withURL: url!)
+        }
+        
         return cell
     }
     
