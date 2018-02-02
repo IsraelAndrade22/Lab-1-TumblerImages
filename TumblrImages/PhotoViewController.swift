@@ -7,22 +7,29 @@
 
 import UIKit
 import AlamofireImage
-import Alamofire
-import OAuthSwift
-import OAuthSwiftAlamofire
 
 class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var posts: [[String: Any]] = [];
     @IBOutlet weak var photoTable: UITableView!
+    var refreshControl : UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //table setting
-        photoTable.delegate = self
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(PhotoViewController.didPullToRefresh(_:)), for: .valueChanged)
+        photoTable.insertSubview(refreshControl, at: 0)
         photoTable.dataSource = self
-
+        fetchPhotos()
+    }
+    
+    @objc func didPullToRefresh(_ refreshControl: UIRefreshControl){
+        fetchPhotos()
+    }
+    
+    func fetchPhotos(){
+        
         // Network request snippet
         let url = URL(string: "https://api.tumblr.com/v2/blog/humansofnewyork.tumblr.com/posts/photo?api_key=Q6vHoaVm5L1u2ZAW1fqv3Jw48gFzYVg9P0vH0VHl3GVy6quoGV")!
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
@@ -41,6 +48,8 @@ class PhotoViewController: UIViewController, UITableViewDataSource, UITableViewD
                 
                 // TODO: Reload the table view
                 self.photoTable.reloadData()
+                
+                self.refreshControl.endRefreshing()
                 
             }
         }

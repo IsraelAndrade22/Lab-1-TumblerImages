@@ -7,10 +7,6 @@ target 'TumblrImages' do
 
   # Pods for TumblrImages
   pod 'AlamofireImage'
-  pod 'Alamofire'
-  # Add additional dependencies
-  pod 'OAuthSwift'
-  pod 'OAuthSwiftAlamofire'
  
   target 'TumblrImagesTests' do
     inherit! :search_paths
